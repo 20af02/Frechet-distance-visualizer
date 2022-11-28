@@ -1,4 +1,8 @@
-import FreeSpace
+import itertools as it
+import numpy as np
+from solver.FreeSpaceDistance import freespace_distance
+from utility.FreeSpace import FreeSpace
+
 class FreeSpaceContinuous(FreeSpace):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
