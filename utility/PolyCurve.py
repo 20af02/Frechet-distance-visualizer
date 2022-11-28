@@ -20,8 +20,7 @@ class PolyCurve:
 
     def _remove_double_points(self):
         """
-        Remove directly following repeated points to prevent sympy from interpreting 
-        them as points.
+        Remove consecutive repeated points
         """
         index = 1
         while index < len(self._points):
@@ -56,40 +55,7 @@ class PolyCurve:
         """ Curve parametrization to [0, total_curve_length] """
         return interp1d(self.parametric_distances, self.coords)(xs)
 
+    """ Segments' length """
     @property
     def parametric_distances(self):
         return np.cumsum(np.array([0] + [float(segment.length) for segment in self.segments]))
-
-
-def plot_curves(P, Q, ax=None, markers=None):
-    if ax is None:
-        fig, ax_ = plt.subplots(1)
-    else:
-        ax_ = ax
-
-    ax_.set_title("Curves P and Q")
-
-    # plot P and Q
-    P_line = ax_.plot(*P.coords, 'o-', color='blue', linewidth=2)
-    Q_line = ax_.plot(*Q.coords, 'o-', color='red', linewidth=2)
-
-    if markers is not None:
-        marker_loc = np.array(
-            [P.parametric(markers[0])] + [Q.parametric(markers[1])])
-
-        # leash connection
-        leash = ax_.plot(marker_loc[:, 0], marker_loc[:, 1], 'o-',
-                         markerfacecolor='black', markersize=8, color='orange', linewidth=2)
-
-        marker_dst = np.linalg.norm(marker_loc[0, :]-marker_loc[1, :])
-
-        ax_.legend(('P', 'Q', f'Leash, length={round(marker_dst,2)}'))
-    else:
-        ax_.legend((P_line, Q_line), ('P', 'Q'))
-
-    if ax is None:
-        fig.show()
-
-
-def plot_pq(Marker_P, Marker_Q):
-    plot_curves(P, Q, markers=(Marker_P, Marker_Q))
