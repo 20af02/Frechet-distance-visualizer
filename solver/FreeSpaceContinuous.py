@@ -14,14 +14,8 @@ class FreeSpaceContinuous(FreeSpace):
     """
     Explores the freespace, checking if each cell can be reached in
     the strong Fréchet distance.
-    
-    :args
-      visited: Array of cells that have already been explored
-      x, y: The coordinates of the cell from which to explore further
-
-    :returns
-      True if the top rightmost cell in the freespace can be reached, else False
     """
+
     cell_entrance_coordinates = -np.ones((self.len_p, self.len_q, 2)) 
     cell_entrance_coordinates[0, 0, :] = np.zeros(2) 
 
