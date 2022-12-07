@@ -16,34 +16,34 @@ class FreeSpaceContinuous(FreeSpace):
     the strong Fréchet distance.
     """
 
-    cell_entrance_coordinates = -np.ones((self.len_p, self.len_q, 2)) 
+    cell_entrance_coordinates = -np.ones((self.len_P, self.len_Q, 2)) 
     cell_entrance_coordinates[0, 0, :] = np.zeros(2) 
 
-    for x, y in it.product(range(self.len_p), range(self.len_q)):
+    for x, y in it.product(range(self.len_P), range(self.len_Q)):
       start_coords = cell_entrance_coordinates[x, y]
 
       # Optimization, only compute distances if we can reach this cell
       if all(start_coords < 0):
         continue
 
-      dy, dy_max = freespace_distance(self.q.segments[y],
-                                      self.p[x + 1],
+      dy, dy_max = freespace_distance(self.Q.segments[y],
+                                      self.P[x + 1],
                                       epsilon)
-      dx, dx_max = freespace_distance(self.p.segments[x],
-                                      self.q[y + 1],
+      dx, dx_max = freespace_distance(self.P.segments[x],
+                                      self.Q[y + 1],
                                       epsilon)
       # Check starting from left going up
-      if start_coords[1] != -1 and dx >= 0 and y < self.len_q - 1:
+      if start_coords[1] != -1 and dx >= 0 and y < self.len_Q - 1:
         cell_entrance_coordinates[x, y + 1, 0] = dx
       # If this is not possible, go down to up
-      elif start_coords[0] != -1 and dx >= 0 and y < self.len_q - 1 and start_coords[0] < dx_max:
+      elif start_coords[0] != -1 and dx >= 0 and y < self.len_Q - 1 and start_coords[0] < dx_max:
         cell_entrance_coordinates[x, y + 1, 0] = max(start_coords[0], dx)
       
       # Check starting from down going right
-      if start_coords[0] != -1 and dy >= 0 and x < self.len_p - 1:
+      if start_coords[0] != -1 and dy >= 0 and x < self.len_P - 1:
         cell_entrance_coordinates[x + 1, y, 1] = dy
       # If this is not possible, go left to right
-      elif start_coords[1] != -1 and dy >= 0 and x < self.len_p - 1 and start_coords[1] < dy_max:
+      elif start_coords[1] != -1 and dy >= 0 and x < self.len_P - 1 and start_coords[1] < dy_max:
         cell_entrance_coordinates[x + 1, y, 1] = max(start_coords[1], dy)
 
       self._callback_continuous(x, y, cell_entrance_coordinates)
@@ -60,8 +60,8 @@ class FreeSpaceContinuous(FreeSpace):
     'continuous' constraints
     """
     # Check if the start and end points can be reached
-    if self.p[0].distance(self.q[0]) > epsilon or \
-       self.p[-1].distance(self.q[-1]) > epsilon:
+    if self.P[0].distance(self.Q[0]) > epsilon or \
+       self.P[-1].distance(self.Q[-1]) > epsilon:
       return False
 
     return any(self.explore_continuous_freespace(epsilon)[-1, -1] >= 0)
@@ -72,13 +72,13 @@ class FreeSpaceContinuous(FreeSpace):
 
     cell_entrance_coordinates = self.explore_continuous_freespace(epsilon)
 
-    p_distances = self.p.parametric_distances
-    q_distances = self.q.parametric_distances
+    p_distances = self.P.parametric_distances
+    q_distances = self.Q.parametric_distances
 
     # Define a polycurve in the continous space to find the path
     inversed_path = [(p_distances[-1], q_distances[-1])]
-    x = self.len_p - 1
-    y = self.len_q - 1
+    x = self.len_P - 1
+    y = self.len_Q - 1
     
     while x != 0 or y != 0:
       if y > 0 and cell_entrance_coordinates[x, y, 0] >= 0:

@@ -4,8 +4,9 @@ from matplotlib.colors import ListedColormap
 from utility.PolyCurve import PolyCurve
 from utility.FreeSpace import FreeSpace, POINT_PER_CELL
 from ipywidgets import interactive, RadioButtons
+from ipywidgets.embed import embed_minimal_html
 
-def plot_custom_curves(P : PolyCurve, Q : PolyCurve, ax=None, markers=None):
+def plot_curves(P : PolyCurve, Q : PolyCurve, ax=None, markers=None):
     if ax is None:
         fig, ax_ = plt.subplots(1)
     else:
@@ -94,11 +95,11 @@ def read_curves():
 # Plot the 2 curves from stored files
 def plot_file_curve():
     P, Q = read_curves()
-    plot_custom_curves(P, Q)
+    plot_curves(P, Q)
 
 def plot_file_freespace():
     P, Q = read_curves()
-    plot_freespace(P.compressed_curve(100), Q.compressed_curve(100), 1000)
+    plot_freespace(P.compressed_curve(100), Q.compressed_curve(100), 1)
 
 def random_curve(n, scale=1):
     return PolyCurve([(np.random.rand()*scale, np.random.rand()*scale) for _ in range(n)])
@@ -113,6 +114,7 @@ def plotfs_pq(epsilon, Marker_P, Marker_Q):
     plot_freespace(P, Q, epsilon, axs[1], (Marker_P, Marker_Q))
     fig.show()
 
+# Return an interactive plot of the freespace
 def render_file_freespace():
     plt.rcParams['figure.figsize'] = [18, 5]
     P, Q = read_curves()
@@ -122,7 +124,5 @@ def render_file_freespace():
                                epsilon=(np.min(s), np.max(s)),
                                Marker_P=(0, P.parametric_distances[-1], 0.01),
                                Marker_Q=(0, Q.parametric_distances[-1], 0.01))
-    output = interactive_plot.children[-1]
-    plt.show()
-
-
+    
+    return interactive_plot

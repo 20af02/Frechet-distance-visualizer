@@ -1,0 +1,14 @@
+from matplotlib.colors import ListedColormap
+
+# Define the colormap
+GRID_GRANULARITY = 100
+COLOR_RED = '#FF0000'
+COLOR_GREEN = '#00FF00'
+COLOR_BLUE = '#0000FF'
+COLOR_WHITE = '#FFFFFF'
+COLOR_BLACK = '#000000'
+COLOR_YELLOW = '#FFFF00'
+COLOR_CYAN = '#00FFFF'
+COLOR_MAGENTA = '#FF00FF'
+COLOR_GRAY = '#808080'
+

@@ -5,3 +5,4 @@ scipy
 matplotlib
 ipywidgets
 arcade
+plotly
