@@ -33,6 +33,16 @@ class PolyCurve:
 
     def __getitem__(self, index):
         return self._points[index]
+        
+    """
+    Return a compressed curve by dividing points by compression_ratio
+    """
+    def compressed_curve(self, compression_ratio):
+        new_points = []
+        for point in self._points:
+            new_points.append(point / compression_ratio)
+            print(point / compression_ratio)
+        return PolyCurve(new_points)
 
     @property
     def segments(self):
@@ -55,7 +65,8 @@ class PolyCurve:
         """ Curve parametrization to [0, total_curve_length] """
         return interp1d(self.parametric_distances, self.coords)(xs)
 
-    """ Segments' length """
+
+    """ Cumulative segments' length """
     @property
     def parametric_distances(self):
         return np.cumsum(np.array([0] + [float(segment.length) for segment in self.segments]))

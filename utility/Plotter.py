@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from utility.PolyCurve import PolyCurve
 from utility.FreeSpace import FreeSpace, POINT_PER_CELL
+from ipywidgets import interactive, RadioButtons
 
 def plot_custom_curves(P : PolyCurve, Q : PolyCurve, ax=None, markers=None):
     if ax is None:
@@ -54,7 +55,7 @@ def plot_freespace(P : PolyCurve, Q : PolyCurve, eps, ax=None, markers=None):
         marker_xy = (markers[0] * POINT_PER_CELL, markers[1] * POINT_PER_CELL)
         ax_.scatter(*marker_xy, color='black')
 
-    ax_.grid(color='greay', linestyle='-', linewidth=0.5)
+    ax_.grid(color='grey', linestyle='-', linewidth=0.5)
 
     x_ticks = P.parametric_distances[1:-1] * POINT_PER_CELL
     ax_.set_xticks(x_ticks)
@@ -97,4 +98,31 @@ def plot_file_curve():
 
 def plot_file_freespace():
     P, Q = read_curves()
+    plot_freespace(P.compressed_curve(100), Q.compressed_curve(100), 1000)
+
+def random_curve(n, scale=1):
+    return PolyCurve([(np.random.rand()*scale, np.random.rand()*scale) for _ in range(n)])
+
+def plot_random_freespace():
+    P, Q = random_curve(20), random_curve(20)
     plot_freespace(P, Q, 0.1)
+
+def plotfs_pq(epsilon, Marker_P, Marker_Q):
+    fig, axs = plt.subplots(1, 2)
+    plot_curves(P, Q, axs[0], (Marker_P, Marker_Q))
+    plot_freespace(P, Q, epsilon, axs[1], (Marker_P, Marker_Q))
+    fig.show()
+
+def render_file_freespace():
+    plt.rcParams['figure.figsize'] = [18, 5]
+    P, Q = read_curves()
+    P, Q = P.compressed_curve(100), Q.compressed_curve(100)
+    s = FreeSpace(P, Q).compute_freespace()
+    interactive_plot = interactive(plotfs_pq,
+                               epsilon=(np.min(s), np.max(s)),
+                               Marker_P=(0, P.parametric_distances[-1], 0.01),
+                               Marker_Q=(0, Q.parametric_distances[-1], 0.01))
+    output = interactive_plot.children[-1]
+    plt.show()
+
+
