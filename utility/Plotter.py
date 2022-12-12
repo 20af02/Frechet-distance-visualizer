@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from utility.PolyCurve import PolyCurve
 from utility.FreeSpace import FreeSpace, POINT_PER_CELL
-from ipywidgets import interactive, RadioButtons
+from ipywidgets import interactive, RadioButtons, fixed
 from ipywidgets.embed import embed_minimal_html
 
 def plot_curves(P : PolyCurve, Q : PolyCurve, ax=None, markers=None):
