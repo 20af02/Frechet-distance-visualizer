@@ -50,7 +50,7 @@ class MainWindow(arcade.Window):
                 self.is_drawing_line_one = False
             self.Q_points.append((x, y))
         # end
-        if button == arcade.key.Z:
+        if button == arcade.MOUSE_BUTTON_MIDDLE:
             self.is_running = False
             # Save points to file
             with open('P_points.txt', 'w') as f:
