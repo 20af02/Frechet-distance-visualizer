@@ -99,7 +99,7 @@ def plot_file_curve():
 
 def plot_file_freespace():
     P, Q = read_curves()
-    plot_freespace(P.compressed_curve(100), Q.compressed_curve(100), 1)
+    plot_freespace(P, Q, 1)
 
 def random_curve(n, scale=1):
     return PolyCurve([(np.random.rand()*scale, np.random.rand()*scale) for _ in range(n)])
@@ -118,7 +118,6 @@ def plotfs_pq(epsilon, Marker_P, Marker_Q):
 def render_file_freespace():
     plt.rcParams['figure.figsize'] = [18, 5]
     P, Q = read_curves()
-    P, Q = P.compressed_curve(100), Q.compressed_curve(100)
     s = FreeSpace(P, Q).compute_freespace()
     interactive_plot = interactive(plotfs_pq,
                                epsilon=(np.min(s), np.max(s)),

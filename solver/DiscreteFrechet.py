@@ -1,4 +1,5 @@
 from utility.FreeSpace import FreeSpace
+from utility.PolyCurve import PolyCurve
 class FreeSpaceDiscrete(FreeSpace):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
