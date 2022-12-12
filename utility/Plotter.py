@@ -108,7 +108,7 @@ def plot_random_freespace():
     P, Q = random_curve(20), random_curve(20)
     plot_freespace(P, Q, 0.1)
 
-def plotfs_pq(epsilon, Marker_P, Marker_Q):
+def plotfs_pq(epsilon, Marker_P, Marker_Q, P, Q):
     fig, axs = plt.subplots(1, 2)
     plot_curves(P, Q, axs[0], (Marker_P, Marker_Q))
     plot_freespace(P, Q, epsilon, axs[1], (Marker_P, Marker_Q))
@@ -122,6 +122,8 @@ def render_file_freespace():
     interactive_plot = interactive(plotfs_pq,
                                epsilon=(np.min(s), np.max(s)),
                                Marker_P=(0, P.parametric_distances[-1], 0.01),
-                               Marker_Q=(0, Q.parametric_distances[-1], 0.01))
+                               Marker_Q=(0, Q.parametric_distances[-1], 0.01),
+                               P=fixed(P),
+                               Q=fixed(Q))
     
     return interactive_plot
