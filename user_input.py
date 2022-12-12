@@ -56,15 +56,15 @@ class MainWindow(arcade.Window):
             with open('P_points.txt', 'w') as f:
                 for item in self.P_points:
                     # write as x, y\n ...
-                    f.write("%s,%s\n" % (int(item[0]*(15.0/800.0)),
-                                         int(item[1]*(15.0/800.0))
+                    f.write("%s,%s\n" % (item[0]*(15.0/800.0),
+                                         item[1]*(15.0/800.0)
                                          )
                             )
 
             with open('Q_points.txt', 'w') as f:
                 for item in self.Q_points:
-                    f.write("%s,%s\n" % (int(item[0]*(15.0/800.0)),
-                                         int(item[1]*(15.0/800.0))
+                    f.write("%s,%s\n" % (item[0]*(15.0/800.0),
+                                         item[1]*(15.0/800.0)
                                          )
                             )
             self.close()
