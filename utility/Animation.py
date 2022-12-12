@@ -16,7 +16,6 @@ EPSILON = 1000
 N_FRAMES = 100
 
 def animate_solution(P : PolyCurve, Q : PolyCurve, eps=1000):
-    P,Q = P.compressed_curve(100), Q.compressed_curve(100)
     freespace = FreeSpaceContinuous(P, Q)
 
     assert freespace.continuous_path_exists(eps), 'Path does not exist'
@@ -41,8 +40,7 @@ def animate_solution(P : PolyCurve, Q : PolyCurve, eps=1000):
     
     plt.close(fig)
 
-    with open('Animation.html', 'w') as f:
-        f.write(ani.to_html5_video())
+    return HTML(ani.to_html5_video())
 
 def plot_leash(frame, point_on_path, line_leash, P, Q):
   cur = point_on_path[:, frame]
