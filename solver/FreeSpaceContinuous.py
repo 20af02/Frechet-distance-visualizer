@@ -95,7 +95,7 @@ class FreeSpaceContinuous(FreeSpace):
     path = [(0, 0)] + path
     return path
 
-  def approximate_minimum_distance(self, tolerance=0.1, debug=False):
+  def calculate_distance(self, tolerance=0.001, debug=False):
 
     # Exponential search step
     epsilon_max = 2
