@@ -1,10 +1,11 @@
-import arcade 
+import arcade
 import sys
 sys.coinit_flags = 2
 
+
 class MainWindow(arcade.Window):
     def __init__(self):
-        super().__init__(800, 600, "Drawing Example")
+        super().__init__(800, 800, "Drawing Example")
 
         self.x = 150
         self.y = 150
@@ -55,15 +56,20 @@ class MainWindow(arcade.Window):
             with open('P_points.txt', 'w') as f:
                 for item in self.P_points:
                     # write as x, y\n ...
-                    f.write("%s,%s\n" % (item[0], item[1]))
+                    f.write("%s,%s\n" % (int(item[0]*(15.0/800.0)),
+                                         int(item[1]*(15.0/800.0))
+                                         )
+                            )
 
             with open('Q_points.txt', 'w') as f:
                 for item in self.Q_points:
-                    f.write("%s,%s\n" % (item[0], item[1]))
+                    f.write("%s,%s\n" % (int(item[0]*(15.0/800.0)),
+                                         int(item[1]*(15.0/800.0))
+                                         )
+                            )
             self.close()
 
 
 if __name__ == "__main__":
     window = MainWindow()
     arcade.run()
-
