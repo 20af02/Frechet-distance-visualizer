@@ -18,7 +18,7 @@ N_FRAMES = 100
 def animate_solution(P : PolyCurve, Q : PolyCurve, eps=1000):
     freespace = FreeSpaceContinuous(P, Q)
 
-    assert freespace.continuous_path_exists(eps), 'Path does not exist'
+    #assert freespace.continuous_path_exists(eps), 'Path does not exist'
 
     plt.rcParams['figure.figsize'] = [18, 5]
 
