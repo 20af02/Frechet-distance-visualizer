@@ -1,4 +1,5 @@
 # Frechet-distance-visualizer
+Computational Geometry stuff
 
 # User_input
 LMB: Add point to P
